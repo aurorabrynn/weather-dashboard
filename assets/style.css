@@ -23,3 +23,11 @@ header {
 h2 {
     padding: 1vh;
 }
+
+#current {
+    border: 1px solid black;
+}
+
+#future {
+    border: 1px solid black;
+}
