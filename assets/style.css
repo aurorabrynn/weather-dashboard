@@ -1,0 +1,25 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family:'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+}
+
+header {
+    background-color: #343A40;
+    color: white;
+    text-align: center;
+    padding: 1vh;
+}
+
+#flexbox {
+    display: flex;
+}
+
+#search-box {
+    background-color: #F8F9FA;
+    height: 100%;
+}
+
+h2 {
+    padding: 1vh;
+}
