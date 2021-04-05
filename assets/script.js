@@ -2,6 +2,7 @@ var searchForm = document.querySelector("#search-form");
 var cityName = document.querySelector("#city-name");
 var currentDiv = document.querySelector("#current");
 var futureDiv = document.querySelector("#future");
+var ulEl = document.querySelector("#list-group");
 var i = 0;
 
 searchForm.addEventListener("submit", function (event) {
@@ -9,6 +10,7 @@ searchForm.addEventListener("submit", function (event) {
     var cityNameInput = cityName.value;
     var urlToFetchCurrent = `http://api.openweathermap.org/data/2.5/weather?q=${cityNameInput}&units=imperial&appid=745149043888fbd1a0283fd8a132ecf0`
     var urlToFetchFuture = `http://api.openweathermap.org/data/2.5/forecast?q=${cityNameInput}&units=imperial&appid=745149043888fbd1a0283fd8a132ecf0`
+    localStorage.setItem('cityName', cityNameInput);
     fetch(urlToFetchCurrent).then(function (response) {
         return response.json()
     }).then(function (data) {
@@ -22,6 +24,10 @@ searchForm.addEventListener("submit", function (event) {
         var titleH2 = document.createElement("h2");
         titleH2.textContent = data.name + " (" + moment().format("M/D/YYYY") + ")";
         resultBlock.append(titleH2);
+
+        /*var icon = document.createElement("img");
+        icon.textContent = data.weather[0].icon;
+        resultBlock.append(icon);*/
 
         console.log(data.main.temp);
         var tempP = document.createElement("p");
@@ -38,20 +44,16 @@ searchForm.addEventListener("submit", function (event) {
         windP.textContent = "Wind Speed: " + data.wind.speed + " MPH";
         resultBlock.append(windP);
 
-        /*var linkAnchor = document.createElement("a");
-        var linkButton = document.createElement("button");
-        linkButton.textContent = "Read More";
-        linkAnchor.setAttribute("href", data.results[i].id);
-        linkAnchor.setAttribute("target", "_blank");
-        linkAnchor.append(linkButton);
-        resultBlock.append(linkAnchor);*/
-
         currentDiv.append(resultBlock);
+
     })
     fetch(urlToFetchFuture).then(function (response) {
         return response.json()
     }).then(function (data) {
         console.log(data)
+        var futureTitle = document.createElement("h3")
+        futureTitle.innerHTML = "5 Day Forecast:"
+        futureDiv.append(futureTitle);
         for (let i = 0; i < data.list.length; i = i + 8) {
             var column = document.createElement("div");
             var card = document.createElement("div");
@@ -83,6 +85,9 @@ searchForm.addEventListener("submit", function (event) {
             column.append(card);
             futureDiv.append(column);
         }
-        console.log(futureDiv);
     })
+    var liEl = document.createElement("li");
+    liEl.innerHTML = localStorage.getItem('cityName');
+    liEl.append(ulEl);
+    console.log(ulEl);
 })
