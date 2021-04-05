@@ -21,7 +21,7 @@ searchForm.addEventListener("submit", function (event) {
     }).then(function (data) {
         currentDiv.innerHTML = "";
         futureDiv.innerHTML = "";
-        //console.log(data);
+        console.log(data);
         var resultBlock = document.createElement("div");
         resultBlock.setAttribute("class", "result-block");
 
@@ -30,9 +30,13 @@ searchForm.addEventListener("submit", function (event) {
         titleH2.textContent = data.name + " (" + moment().format("M/D/YYYY") + ")";
         resultBlock.append(titleH2);
 
-        /*var icon = document.createElement("img");
-        icon.textContent = data.weather[0].icon;
-        resultBlock.append(icon);*/
+        var iconDiv = document.createElement("div");
+        var icon = document.createElement("img");
+        var iconId = data.weather[0].icon
+        var iconUrl = `http://openweathermap.org/img/wn/${iconId}.png`;
+        icon.setAttribute = ("src", iconUrl);
+        iconDiv.append(icon);
+        resultBlock.append(iconDiv);
 
         //console.log(data.main.temp);
         var tempP = document.createElement("p");
@@ -65,7 +69,7 @@ searchForm.addEventListener("submit", function (event) {
     fetch(urlToFetchFuture).then(function (response) {
         return response.json()
     }).then(function (data) {
-        //console.log(data)
+        console.log(data)
         var futureTitle = document.createElement("h3")
         futureTitle.innerHTML = "5 Day Forecast:"
         futureDiv.append(futureTitle);
@@ -83,6 +87,14 @@ searchForm.addEventListener("submit", function (event) {
             dateH3.textContent = moment(data.list[i].dt_txt).format("M/D/YYYY");
             dateH3.setAttribute = ("class", "card-title")
             cardBody.append(dateH3);
+
+            var iconDiv = document.createElement("div");
+            var icon = document.createElement("img");
+            var iconId = data.list[i].weather[0].icon
+            var iconUrl = `http://openweathermap.org/img/w/${iconId}.png`;
+            icon.setAttribute = ("src", iconUrl);
+            iconDiv.append(icon);
+            cardBody.append(iconDiv);
 
             //console.log(data.list[i].main.temp);
             var tempP = document.createElement("p");
